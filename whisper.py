@@ -163,6 +163,7 @@ def transcribe_single_audio(
     transcription_dir: Path,
     config: dict,
 ) -> None:
+    file_start_time = time.time()
     use_batched_inference = bool(config.get("use_batched_inference", False))
     transcribe_kwargs = build_transcribe_kwargs(config)
     batch_size = int(config.get("batch_size", 16))
@@ -199,6 +200,14 @@ def transcribe_single_audio(
             print(line, flush=True)
             f.write("\n" + line)
             f.flush()
+
+        elapsed_s = int(time.time() - file_start_time)
+        mm = elapsed_s // 60
+        ss = elapsed_s % 60
+        duration_line = f"LOGGER: Время выполнения: {mm:02d}:{ss:02d}"
+        print(duration_line, flush=True)
+        f.write("\n" + duration_line)
+        f.flush()
 
     print(f"LOGGER: Транскрипция сохранена: {log_path}")
 
