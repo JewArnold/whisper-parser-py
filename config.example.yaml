@@ -8,8 +8,28 @@ base_path_candidates:
 
 audio_folder_name: "audio"
 transcription_folder_name: "transcription"
+processing_mode: "single" # single | all
+audio_extensions: # supported input formats
+  - ".mp3"
+  - ".wav"
+  - ".m4a"
+  - ".flac"
+  - ".ogg"
+  - ".aac"
+  - ".mp4"
+  - ".wma"
 
 beam_size: 5
+language: null # e.g. "en", "ru" or null for auto-detect
+condition_on_previous_text: true
+word_timestamps: false
+vad_filter: true
+vad_parameters:
+  min_silence_duration_ms: 500
+
+use_batched_inference: false
+batch_size: 16
+
 device: "cpu"
 compute_type: "int8"
 heartbeat_interval_s: 5
