@@ -80,11 +80,6 @@ def validate_config(config: dict) -> None:
             "LOGGER: `audio_extensions` должен быть непустым списком расширений."
         )
 
-    vad_parameters = config.get("vad_parameters", {})
-    if vad_parameters is not None and not isinstance(vad_parameters, dict):
-        raise SystemExit("LOGGER: `vad_parameters` должен быть YAML-объектом (map).")
-
-
 def resolve_base_path(candidates: list[Path]) -> Path:
     for candidate in candidates:
         if candidate.exists():
@@ -150,7 +145,6 @@ def build_transcribe_kwargs(config: dict) -> dict:
     kwargs = {
         "beam_size": int(config.get("beam_size", 5)),
         "word_timestamps": bool(config.get("word_timestamps", False)),
-        "vad_filter": bool(config.get("vad_filter", True)),
         "condition_on_previous_text": bool(config.get("condition_on_previous_text", True)),
     }
 
@@ -159,10 +153,6 @@ def build_transcribe_kwargs(config: dict) -> dict:
         language = str(language).strip()
         if language:
             kwargs["language"] = language
-
-    vad_parameters = config.get("vad_parameters")
-    if isinstance(vad_parameters, dict) and vad_parameters:
-        kwargs["vad_parameters"] = vad_parameters
 
     return kwargs
 
