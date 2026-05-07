@@ -1,0 +1,15 @@
+hf_token: "your_huggingface_token_here"
+model_size: "large-v3"
+
+base_path_candidates:
+  - "~/OneDrive/Рабочий стол"
+  - "~/OneDrive/Desktop"
+  - "~/Desktop"
+
+audio_folder_name: "audio"
+transcription_folder_name: "transcription"
+
+beam_size: 5
+device: "cpu"
+compute_type: "int8"
+heartbeat_interval_s: 5
