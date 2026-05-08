@@ -251,11 +251,17 @@ def main() -> None:
     audio_files = pick_audio_files(
         audio_dir, config["processing_mode"], config["audio_extensions"]
     )
+    print(
+        "LOGGER: Загружаю модель "
+        f"(model={config['model_size']}, device={config['device']}, compute_type={config['compute_type']})...",
+        flush=True,
+    )
     model = WhisperModel(
         config["model_size"],
         device=config["device"],
         compute_type=config["compute_type"],
     )
+    print("LOGGER: Модель успешно загружена.", flush=True)
 
     start_time = time.time()
     stop_event = threading.Event()
@@ -266,6 +272,10 @@ def main() -> None:
     ).start()
 
     try:
+        print(
+            f"LOGGER: Найдено файлов для обработки: {len(audio_files)}",
+            flush=True,
+        )
         for index, audio_path in enumerate(audio_files, start=1):
             if len(audio_files) > 1:
                 print(
